@@ -1,0 +1,6 @@
+-- function love.conf(t)
+--    t.title = "Engine"
+--    t.version = "11.3"
+--    t.console = true
+--    t.window.vsync = 0
+-- end

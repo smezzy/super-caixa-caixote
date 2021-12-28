@@ -1,6 +1,6 @@
 Enemy = Class:extend()
 Enemy:implement(Physics)
-
+enemy_s = love.audio.newSource('assets/enemyDeath.ogg', 'static')
 function Enemy:new(group, x , y)
    self.image = love.graphics.newImage('assets/player.png')
    self.class = 'Enemy'
@@ -119,7 +119,8 @@ function Enemy:die(killer)
    self.y_vel = -90
    self.ox, self.oy = 6, 7
    self.z = -1
-   love.audio.newSource('assets/enemyDeath.ogg', 'static'):play()
+   enemy_s:stop()
+   enemy_s:play()
    local dir = self.x - killer.x
    self.x_vel = (dir > 0 and 1 or -1) * 100
    main.current.world:remove(self)
@@ -128,7 +129,7 @@ end
 
 Crate = Class:extend()
 Crate:implement(Physics)
-
+local pickup_s = love.audio.newSource('assets/pickup.ogg', 'static')
 function Crate:new(group, last)
    local spawnpoint = require('levels/level1')
    local spawnable = spawnpoint.layers[3]
@@ -162,7 +163,8 @@ function Crate:pickup()
    main.current.score = main.current.score + 1
    self.remove = true
    main.current.world:remove(self)
-   love.audio.newSource('assets/pickup.ogg', 'static'):play()
+   pickup_s:stop()
+   pickup_s:play()
 end
 
 function Crate:draw()

@@ -1,6 +1,6 @@
 Player = Class:extend()
 Player:implement(Physics)
-
+shot_s = love.audio.newSource('assets/shot.ogg', 'static')
 function Player:new(group, x, y)
    self.class = 'Player'
    self.group = group
@@ -33,7 +33,8 @@ function Player:new(group, x, y)
             self.fire_timer = 0
             camera:shake(2, .2, 55)
             self:apply_knockback(this.recoil)
-            love.audio.newSource('assets/shot.ogg', 'static'):play()
+            shot_s:stop()
+            shot_s:play()
             for i = 1, 6 do
                JumpParticle(main.current.main, self.x + self.width + 2, self.y + self.height - 2, love.math.random(19, 30))
             end
@@ -46,6 +47,7 @@ function Player:new(group, x, y)
          fire_mode = 'automatic',
          fire_rate  = .08,
          damage  = 1,
+         sound = love.audio.newSource('assets/shot.ogg', 'static'),
          recoil = 100,
          index = 2,
          shoot = function(self)
@@ -54,8 +56,9 @@ function Player:new(group, x, y)
             self.fire_timer = 0
             camera:shake(2, .15, 70)
             self:apply_knockback(this.recoil)
-            love.audio.newSource('assets/shot.ogg', 'static'):play()
-
+            shot_s:stop()
+            shot_s:play()
+            -- self.timer:after(0.2, function() s = nil end)
             Bullet(main.current.main, self.x, self.y + self.height/2, -utils.bool_to_int(self.flip_x), 0, this.damage, 400)
          end,
       },
@@ -66,13 +69,15 @@ function Player:new(group, x, y)
          fire_rate  = .4,
          damage  = 12,
          recoil = 600,
+         sound = love.audio.newSource('assets/shot.ogg', 'static'),
          bullet_speed = 300,
          shoot = function(self)
             this = self.weapons[3]
             if self.fire_timer < self.current_weapon.fire_rate then return end
             self.fire_timer = 0
             camera:shake(2, .2, 55)
-            love.audio.newSource('assets/shot.ogg', 'static'):play()
+            shot_s:stop()
+            shot_s:play()
             self:apply_knockback(this.recoil)
 
                         for i = 1, 5 do
@@ -85,6 +90,7 @@ function Player:new(group, x, y)
          image = love.graphics.newImage('assets/gun.png'),
          fire_mode = 'semi',
          fire_rate  = .1,
+         sound = love.audio.newSource('assets/shot.ogg', 'static'),
          damage  = 2,
          recoil = 200,
          bullet_speed = 400,
@@ -93,7 +99,8 @@ function Player:new(group, x, y)
             if self.fire_timer < self.current_weapon.fire_rate then return end
             self.fire_timer = 0
             camera:shake(2, .2, 55)
-            love.audio.newSource('assets/shot.ogg', 'static'):play()
+            shot_s:stop()
+            shot_s:play()
 
             Bullet(main.current.main, self.x, self.y + self.height/2, -utils.bool_to_int(self.flip_x), 0, this.damage, this.bullet_speed)
             Bullet(main.current.main, self.x, self.y + self.height/2, utils.bool_to_int(self.flip_x), 0, this.damage, this.bullet_speed)

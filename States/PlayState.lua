@@ -2,7 +2,6 @@ PlayState = Class:extend()
 PlayState:implement(State)
 
 local bg_particles = {}
-local ost = love.audio.newSource('assets/ost.mp3', 'static')
 
 function PlayState:new(name)
    self:init_state(name)
@@ -10,8 +9,9 @@ end
 
 function PlayState:on_enter(from)
    self.exiting = false
-   ost:setLooping(true)
-   ost:play()
+   self.ost = love.audio.newSource('assets/ost.mp3', 'static')
+   self.ost:setLooping(true)
+   self.ost:play()
    self.timer = Timer()
    self.world = bump.newWorld()
    self.main = Group()
@@ -36,7 +36,8 @@ function PlayState:on_enter(from)
 end
 
 function PlayState:on_exit(from)
-   ost:stop()
+   self.ost:stop()
+   self.ost = nil
    self.main = nil
    self.world = nil
    self.timer = nil
@@ -45,7 +46,7 @@ function PlayState:on_exit(from)
 end
 
 function PlayState:update(dt)
-   
+
    if self.timer then self.timer:update(dt) end
    self.main:update(dt)
    self.height = self.height + dt * 10

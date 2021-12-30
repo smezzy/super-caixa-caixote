@@ -1,9 +1,8 @@
-name = "super-caixa-caixote"
+name = "Sekuras"
 default_targets = ["win32", "win64"]
-build_directory = "makelove-build"
+build_directory = "builds"
 
 love_files = [
-    "+*",
+    "::git-ls-tree::",
     "-*/.*",
-    "-./makelove-build/*",
 ]

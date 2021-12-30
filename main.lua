@@ -10,7 +10,7 @@ local switch_vsync = 0
 local fulscreen = false
 
 love.graphics.setDefaultFilter("nearest", "nearest")
-push:setupScreen(screen_width, screen_height, window_width, window_height, {fullscreen = false, resizable = true, pixelperfect = false, canvas = false})
+push:setupScreen(screen_width, screen_height, window_width, window_height, {fullscreen = false, resizable = true, pixelperfect = false, canvas = true})
 
 function love.load()
    local base_classes = recursive_enumerate('objects/baseclasses')
